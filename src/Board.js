@@ -12,8 +12,8 @@ class Board extends React.Component {
     super(props);
     this.state = {
       history: [
-        { squares:
-          [
+        {
+          squares: [
             {
               position: [0, 0],
               value: null
