@@ -11,18 +11,31 @@ class Board extends React.Component {
 
   render() {
     const list = [
-      [1, 1],
-      [1, 2],
+      [
+        [1, 1],
+        [1, 2],
+        [1, 3]
+      ],[
+        [2, 1],
+        [2, 2],
+        [2, 3]
+      ],[
+        [3, 1],
+        [3, 2],
+        [3, 3]
+      ]
     ]
     return (
       <div>
-        {
-          list.map((i) =>
-          <Square
-              vlue={i[1]}
-           />
-          )
-        }
+        {list.map((items) =>
+          <div>
+            {items.map((item) =>
+              <Square
+                  vlue={item}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   }
