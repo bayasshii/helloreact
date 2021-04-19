@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-const style = {
+const button = {
   border: '1px solid #000',
-  padding: '24px',
-  width: '50px',
+  height: '100px',
+  width: '100px',
 };
 
 class Square extends React.Component {
@@ -16,8 +15,10 @@ class Square extends React.Component {
 
   render() {
     return (
-      <button style={style}>
-        {this.props.vlue}
+      <button style={button}>
+        {this.props.square.position[0]}
+        ,
+        {this.props.square.position[1]}
       </button>
     );
   }
