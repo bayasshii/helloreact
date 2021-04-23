@@ -4,6 +4,8 @@ import Game from './Otehon.js'
 
 const button__wrap = {
   width: '300px',
+  display: 'flex',
+  flexWrap: 'wrap'
 };
 
 
@@ -11,65 +13,49 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [
-        {
-          squares: [
-            {
-              position: [0, 0],
-              value: null
-            },
-            {
-              position: [0, 1],
-              value: null
-            },
-            {
-              position: [0, 2],
-              value: null
-            },
-            {
-              position: [1, 0],
-              value: null
-            },
-            {
-              position: [1, 1],
-              value: null
-            },
-            {
-              position: [1, 2],
-              value: null
-            },
-            {
-              position: [2, 0],
-              value: null
-            },
-            {
-              position: [2, 1],
-              value: null
-            },
-            {
-              position: [2, 2],
-              value: null
-            }
-          ]
-        }
-      ],
-      currentNumber: 0
+      history: [JSON.parse(JSON.stringify((new Array(3)).fill((new Array(3)).fill(null))))],
+      stepNumber: 0,
+      xIsNext: "X"
     }
   };
 
+  handleClick(x, y) {
+    const history = this.state.history
+    const current = history[this.state.stepNumber];
+    const squares = current.slice();
+
+    squares[y][x] = "ちゃんと動いた〜〜";
+
+    const squares_slice = squares.slice();
+
+    this.setState({
+      history: history.concat([squares_slice]),
+      stepNumber: history.length
+    });
+
+   console.log(this.state.history)
+  }
+
   render() {
-    const currentNumber = this.state.currentNumber
-    const squares = this.state.history[currentNumber].squares
+    const stepNumber = this.state.stepNumber
+    const squares = this.state.history[stepNumber]
     return (
       <div>
-        {console.log(squares)}
         <Game />
+        <div>{stepNumber}</div>
         <div style={button__wrap}>
-          {squares.map((square) =>
-            <Square
-                square={square}
-            />
-          )}
+          {
+            squares.map((squares_y, index_y) =>
+              squares_y.map((square, index_x) =>
+                <Square
+                    x={index_x}
+                    y={index_y}
+                    square={square}
+                    onClick={(x, y) => this.handleClick(x, y)}
+                />
+              )
+            )
+          }
         </div>
       </div>
     );

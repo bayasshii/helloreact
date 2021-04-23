@@ -15,10 +15,11 @@ class Square extends React.Component {
 
   render() {
     return (
-      <button style={button}>
-        {this.props.square.position[0]}
-        ,
-        {this.props.square.position[1]}
+      <button
+        style={button}
+        onClick={() => this.props.onClick(this.props.x, this.props.y)}
+      >
+        {this.props.square ? this.props.square : "nullだよん"}
       </button>
     );
   }
