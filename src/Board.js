@@ -24,7 +24,7 @@ class Board extends React.Component {
     const current = history[this.state.stepNumber];
     const squares = current.slice();
 
-    squares[y][x] = "ちゃんと動いた〜〜";
+    squares[y][x] = "ちゃんと動いたZ！！";
 
     const squares_slice = squares.slice();
 
