@@ -92,10 +92,16 @@ class Board extends React.Component {
     return (
       <Table
         orders={orders}
+        onClick={(step)=>this.backStep(step)}
       />
     );
   }
-  
+  backStep(step) {
+    this.setState({
+      stepNumber: step,
+      whatNext: (step % 2) === 0 ? "○" : "X"
+    });
+  }
 
   render() {
     const stepNumber = this.state.stepNumber
@@ -135,6 +141,3 @@ class Board extends React.Component {
   }
 }
 export default Board;
-
-
-[[0,1],[1,2],[2,3]].some((array)=>{return [1,2].every((e,i)=>{return array[i]===e})})

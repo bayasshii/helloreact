@@ -33,6 +33,7 @@ class Table extends React.Component {
                 <th></th>
                 <th style={td}>属性</th>
                 <th style={td}>座標</th>
+                <th></th>
             </tr>
             {
               orders[0] ? orders.map((order, i)=>
@@ -40,6 +41,7 @@ class Table extends React.Component {
                 <td style={td}>{i+1}</td>
                 <td style={td}>{ i%2 ? "X" : "○"}</td>
                 <td style={td}>{order[1]}, {order[0]}</td>
+                <td><button onClick={() => this.props.onClick(i)}>巻き戻す</button></td>
               </tr>
             )
             :
