@@ -1,7 +1,6 @@
 import React from 'react';
 
 const table = {
-  border: '1px solid #000',
   margin: '36px'
 };
 
@@ -14,6 +13,10 @@ const td = {
   textAlign: 'center'
 };
 
+const table_head = {
+  background: '#00ffff'
+}
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -22,19 +25,28 @@ class Table extends React.Component {
   }
 
   render() {
+    const orders = this.props.orders
     return (
       <table style={table}>
         <tbody>
-            <tr style={tr}>
+            <tr style={table_head}>
                 <th></th>
                 <th style={td}>属性</th>
                 <th style={td}>座標</th>
             </tr>
-            <tr style={tr}>
-                <td style={td}>1</td>
-                <td style={td}>○</td>
-                <td style={td}>(1,0)</td>
-            </tr>
+            {
+              orders[0] ? orders.map((order, i)=>
+              <tr style={tr}>
+                <td style={td}>{i+1}</td>
+                <td style={td}>{ i%2 ? "X" : "○"}</td>
+                <td style={td}>{order[1]}, {order[0]}</td>
+              </tr>
+            )
+            :
+              <tr>
+                <td colspan="3" style={td}>No Data</td>
+              </tr>
+            }
         </tbody>
       </table>
     );

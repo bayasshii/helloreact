@@ -9,7 +9,6 @@ const button__wrap = {
   flexWrap: 'wrap'
 };
 
-
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -68,10 +67,26 @@ class Board extends React.Component {
   }
 
   renderTable() {
-    const order = []
+    let orders = []
+    const history = this.state.history
+    history.map((squares) => {
+      squares.map((squares_y, index_y) => {
+        squares_y.map((square, index_x) => {
+          if (square) {
+            if (!orders.some(
+              (array)=>{
+                return [index_y, index_x].every((e,i)=>{return array[i]===e})
+                }
+              )) {
+              orders = orders.concat([[index_y, index_x]])
+            }
+          }
+        })
+      })
+    })
     return (
       <Table
-        order={order}
+        orders={orders}
       />
     );
   }
@@ -87,6 +102,7 @@ class Board extends React.Component {
       <div>
         <Game />
         <div>{stepNumber}</div>
+        {this.renderTable()}
         <div>{ winner ? "winner: " + winner : "next: " + whatNext}</div>
         {/*
         {this.state.history[1] ? this.state.history[1] : "poyopoyo"}
@@ -114,3 +130,6 @@ class Board extends React.Component {
   }
 }
 export default Board;
+
+
+[[0,1],[1,2],[2,3]].some((array)=>{return [1,2].every((e,i)=>{return array[i]===e})})
