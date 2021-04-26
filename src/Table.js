@@ -30,7 +30,7 @@ class Table extends React.Component {
       <table style={table}>
         <tbody>
             <tr style={table_head}>
-                <th>番号</th>
+                <th></th>
                 <th style={td}>属性</th>
                 <th style={td}>座標</th>
             </tr>

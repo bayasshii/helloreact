@@ -3,12 +3,16 @@ import Square from './Square.js'
 import Table from './Table.js'
 
 const button__wrap = {
+  margin: '36px',
   width: '300px',
   height: '300px',
   display: 'flex',
   flexWrap: 'wrap',
-  
 };
+
+const next_winner = {
+  margin: '36px'
+}
 
 class Board extends React.Component {
   constructor(props) {
@@ -102,10 +106,6 @@ class Board extends React.Component {
     return (
       <div>
         <div style={{display: 'flex'}}>
-          <div>
-            <div>{ winner ? "winner: " + winner : "next: " + whatNext}</div>
-            {this.renderTable()}
-          </div>
           <div style={button__wrap}>
             {
               squares.map((squares_y, index_y) =>
@@ -120,6 +120,12 @@ class Board extends React.Component {
                 )
               )
             }
+          </div>
+          <div>
+            <div style={next_winner}>
+              { winner ? "winner: " + winner : "next: " + whatNext}
+            </div>
+            {this.renderTable()}
           </div>
         </div>
       </div>
