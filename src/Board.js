@@ -1,12 +1,13 @@
 import React from 'react';
 import Square from './Square.js'
 import Table from './Table.js'
-import Game from './Otehon.js'
 
 const button__wrap = {
   width: '300px',
+  height: '300px',
   display: 'flex',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
+  
 };
 
 class Board extends React.Component {
@@ -23,13 +24,13 @@ class Board extends React.Component {
   handleClick(x, y) {
     if(!this.state.winner){
       const history = this.state.history
-      const stepNumber = this.state.stepNumber
-
-      const current = history[stepNumber]
-      const squares = current.slice()
+      const current = history[history.length - 1]
+      const squares = JSON.parse(JSON.stringify(current))
       squares[y][x] = this.state.whatNext;
 
       this.updateWinner(squares)
+
+      console.log(squares)
 
       const whatNext = this.state.whatNext === "X" ? "○" : "X"
 
@@ -100,30 +101,26 @@ class Board extends React.Component {
 
     return (
       <div>
-        <Game />
-        <div>{stepNumber}</div>
-        {this.renderTable()}
-        <div>{ winner ? "winner: " + winner : "next: " + whatNext}</div>
-        {/*
-        {this.state.history[1] ? this.state.history[1] : "poyopoyo"}
-        <br/>
-        {this.state.history[2] ? this.state.history[2] : "poyopoyo"}
-        <br/>
-        {this.state.history[3] ? this.state.history[3] : "poyopoyo"}
-        */}
-        <div style={button__wrap}>
-          {
-            squares.map((squares_y, index_y) =>
-              squares_y.map((square, index_x) =>
-                <Square
-                    x={index_x}
-                    y={index_y}
-                    square={square}
-                    onClick={(x, y) => this.handleClick(x, y)}
-                />
+        <div style={{display: 'flex'}}>
+          <div>
+            <div>{ winner ? "winner: " + winner : "next: " + whatNext}</div>
+            {this.renderTable()}
+          </div>
+          <div style={button__wrap}>
+            {
+              squares.map((squares_y, index_y) =>
+                squares_y.map((square, index_x) =>
+                  <Square
+                      key={[index_y,index_x]}
+                      x={index_x}
+                      y={index_y}
+                      square={square}
+                      onClick={(x, y) => this.handleClick(x, y)}
+                  />
+                )
               )
-            )
-          }
+            }
+          </div>
         </div>
       </div>
     );

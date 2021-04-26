@@ -4,6 +4,8 @@ const button = {
   border: '1px solid #000',
   height: '100px',
   width: '100px',
+  fontSize: '24px',
+  marginBottom: '0'
 };
 
 class Square extends React.Component {
@@ -17,9 +19,9 @@ class Square extends React.Component {
     return (
       <button
         style={button}
-        onClick={() => this.props.onClick(this.props.x, this.props.y)}
+        onClick={!Boolean(this.props.square) ? (() => this.props.onClick(this.props.x, this.props.y)) :(()=>{})}
       >
-        {this.props.square ? this.props.square : "nullだよん"}
+        {this.props.square ? this.props.square : "null"}
       </button>
     );
   }
