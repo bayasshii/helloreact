@@ -21,7 +21,7 @@ class Square extends React.Component {
         style={button}
         onClick={!Boolean(this.props.square) ? (() => this.props.onClick(this.props.x, this.props.y)) :(()=>{})}
       >
-        {this.props.square ? this.props.square : "null"}
+        {this.props.square ? this.props.square : ""}
       </button>
     );
   }

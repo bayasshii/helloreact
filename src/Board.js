@@ -123,7 +123,9 @@ class Board extends React.Component {
           </div>
           <div>
             <div style={next_winner}>
-              { winner ? "winner: " + winner : "next: " + whatNext}
+              { winner ? "winner: " + winner :
+               (stepNumber < 9 ? "next: " + whatNext : 'ひきわけ')
+              }
             </div>
             {this.renderTable()}
           </div>
