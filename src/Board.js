@@ -26,24 +26,65 @@ class Board extends React.Component {
   };
 
   handleClick(x, y) {
-    if(!this.state.winner){
-      const history = this.state.history
-      const current = history[history.length - 1]
+    if(!this.state.winner) {
+      let history = this.state.history
+      const stepNumber = this.state.stepNumber
+
+      const current = history[stepNumber]
       const squares = JSON.parse(JSON.stringify(current))
       squares[y][x] = this.state.whatNext;
+      const whatNext = this.state.whatNext === "X" ? "○" : "X"
 
       this.updateWinner(squares)
 
-      console.log(squares)
+      this.setState({
+        whatNext: whatNext,
+        stepNumber: stepNumber + 1
+      });
 
-      const whatNext = this.state.whatNext === "X" ? "○" : "X"
-
+      if (history.length - stepNumber -1 !== 0) {
+        history = history.map((element)=>{
+          return JSON.stringify(element)
+        })
+        history = [...Array(stepNumber+1)].map((_, i) => i).map((number)=>{
+          return history[number]
+        })
+        history = history.map((element)=>{
+          return JSON.parse(element)
+        })
+      }
       this.setState({
         history: history.concat([squares]),
-        stepNumber: history.length,
-        whatNext: whatNext
       });
     }
+  }
+
+  renderTable() {
+    let orders = []
+    const history = this.state.history
+    const stepNumber = this.state.stepNumber
+    history.map((squares) => {
+      squares.map((squares_y, index_y) => {
+        squares_y.map((square, index_x) => {
+          if (square) {
+            if (!orders.some(
+              (array)=>{
+                return [index_y, index_x].every((e,i)=>{return array[i]===e})
+                }
+              )) {
+              orders = orders.concat([[index_y, index_x]])
+            }
+          }
+        })
+      })
+    })
+    return (
+      <Table
+        orders={orders}
+        stepNumber={stepNumber}
+        onClick={(step)=>this.backStep(step)}
+      />
+    );
   }
 
   updateWinner (squares) {
@@ -71,35 +112,11 @@ class Board extends React.Component {
     }
   }
 
-  renderTable() {
-    let orders = []
-    const history = this.state.history
-    history.map((squares) => {
-      squares.map((squares_y, index_y) => {
-        squares_y.map((square, index_x) => {
-          if (square) {
-            if (!orders.some(
-              (array)=>{
-                return [index_y, index_x].every((e,i)=>{return array[i]===e})
-                }
-              )) {
-              orders = orders.concat([[index_y, index_x]])
-            }
-          }
-        })
-      })
-    })
-    return (
-      <Table
-        orders={orders}
-        onClick={(step)=>this.backStep(step)}
-      />
-    );
-  }
   backStep(step) {
     this.setState({
-      stepNumber: step,
-      whatNext: (step % 2) === 0 ? "○" : "X"
+      stepNumber: step+1,
+      whatNext: (step % 2) === 0 ? "X" : "○",
+      winner: null,
     });
   }
 
@@ -108,7 +125,6 @@ class Board extends React.Component {
     const squares = this.state.history[stepNumber]
     const winner = this.state.winner
     const whatNext = this.state.whatNext
-
     return (
       <div>
         <div style={{display: 'flex'}}>

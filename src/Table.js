@@ -26,6 +26,7 @@ class Table extends React.Component {
 
   render() {
     const orders = this.props.orders
+    const stepNumber = this.props.stepNumber
     return (
       <table style={table}>
         <tbody>
@@ -41,7 +42,13 @@ class Table extends React.Component {
                 <td style={td}>{i+1}</td>
                 <td style={td}>{ i%2 ? "X" : "○"}</td>
                 <td style={td}>{order[1]}, {order[0]}</td>
-                <td><button onClick={() => this.props.onClick(i)}>巻き戻す</button></td>
+                <td>
+                  {stepNumber === i+1 ? 
+                    <div>イマココ</div>
+                    :
+                    <button onClick={() => this.props.onClick(i)}>巻き戻す</button>
+                  }
+                </td>
               </tr>
             )
             :
